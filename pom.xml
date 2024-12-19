@@ -21,7 +21,7 @@
   <parent>
     <groupId>org.codehaus.plexus</groupId>
     <artifactId>plexus</artifactId>
-    <version>18</version>
+    <version>19</version>
   </parent>
 
   <artifactId>plexus-classworlds</artifactId>
@@ -69,7 +69,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-dependency-plugin</artifactId>
-          <version>3.7.1</version>
+          <version>3.8.1</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
