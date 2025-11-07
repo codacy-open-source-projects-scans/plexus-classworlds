@@ -29,140 +29,150 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class EntryTest extends AbstractClassWorldsTestCase {
 
     @Test
-    void testCompareTo() throws Exception {
-        ClassWorld cw = new ClassWorld();
-        ClassRealm r = cw.newRealm("test1");
+    void checkCompareTo() throws Exception {
+        try (ClassWorld cw = new ClassWorld()) {
+            ClassRealm r = cw.newRealm("test1");
 
-        Entry entry1 = new Entry(r, "org.test");
-        Entry entry2 = new Entry(r, "org.test.impl");
+            Entry entry1 = new Entry(r, "org.test");
+            Entry entry2 = new Entry(r, "org.test.impl");
 
-        assertTrue(entry1.compareTo(entry2) > 0, "org.test > org.test.impl");
+            assertTrue(entry1.compareTo(entry2) > 0, "org.test > org.test.impl");
+        }
     }
 
     /**
      * Tests the equality is realm independant
      */
     @Test
-    void testEquals() throws DuplicateRealmException {
-        ClassWorld cw = new ClassWorld();
-        ClassRealm r1 = cw.newRealm("test1");
-        ClassRealm r2 = cw.newRealm("test2");
+    void chckEquals() throws Exception {
+        try (ClassWorld cw = new ClassWorld()) {
+            ClassRealm r1 = cw.newRealm("test1");
+            ClassRealm r2 = cw.newRealm("test2");
 
-        Entry entry1 = new Entry(r1, "org.test");
-        Entry entry2 = new Entry(r2, "org.test");
+            Entry entry1 = new Entry(r1, "org.test");
+            Entry entry2 = new Entry(r2, "org.test");
 
-        assertEquals(entry1, entry2, "entry1 == entry2");
-        assertEquals(entry1.hashCode(), entry2.hashCode(), "entry1.hashCode() == entry2.hashCode()");
+            assertEquals(entry1, entry2, "entry1 == entry2");
+            assertEquals(entry1.hashCode(), entry2.hashCode(), "entry1.hashCode() == entry2.hashCode()");
+        }
     }
 
     @Test
-    void testMatchesClassByPackageImport() throws Exception {
-        ClassWorld cw = new ClassWorld();
-        ClassRealm r = cw.newRealm("test1");
+    void matchesClassByPackageImport() throws Exception {
+        try (ClassWorld cw = new ClassWorld()) {
+            ClassRealm r = cw.newRealm("test1");
 
-        Entry entry = new Entry(r, "org.test");
+            Entry entry = new Entry(r, "org.test");
 
-        assertTrue(entry.matches("org.test.MyClass"));
-        assertTrue(entry.matches("org.test.MyClass$NestedClass"));
-        assertTrue(entry.matches("org.test.MyClassUtils"));
-        assertTrue(entry.matches("org.test.impl.MyClass"));
-        assertFalse(entry.matches("org.tests.AnotherClass"));
+            assertTrue(entry.matches("org.test.MyClass"));
+            assertTrue(entry.matches("org.test.MyClass$NestedClass"));
+            assertTrue(entry.matches("org.test.MyClassUtils"));
+            assertTrue(entry.matches("org.test.impl.MyClass"));
+            assertFalse(entry.matches("org.tests.AnotherClass"));
+        }
     }
 
     @Test
-    void testMatchesClassByClassImport() throws Exception {
-        ClassWorld cw = new ClassWorld();
-        ClassRealm r = cw.newRealm("test1");
+    void matchesClassByClassImport() throws Exception {
+        try (ClassWorld cw = new ClassWorld()) {
+            ClassRealm r = cw.newRealm("test1");
 
-        Entry entry = new Entry(r, "org.test.MyClass");
+            Entry entry = new Entry(r, "org.test.MyClass");
 
-        assertTrue(entry.matches("org.test.MyClass"));
-        assertTrue(entry.matches("org.test.MyClass$NestedClass"));
-        assertFalse(entry.matches("org.test.MyClassUtils"));
-        assertFalse(entry.matches("org.test.AnotherClass"));
+            assertTrue(entry.matches("org.test.MyClass"));
+            assertTrue(entry.matches("org.test.MyClass$NestedClass"));
+            assertFalse(entry.matches("org.test.MyClassUtils"));
+            assertFalse(entry.matches("org.test.AnotherClass"));
+        }
     }
 
     @Test
-    void testMatchesResourceByPackageImport() throws Exception {
-        ClassWorld cw = new ClassWorld();
-        ClassRealm r = cw.newRealm("test1");
+    void matchesResourceByPackageImport() throws Exception {
+        try (ClassWorld cw = new ClassWorld()) {
+            ClassRealm r = cw.newRealm("test1");
 
-        Entry entry = new Entry(r, "org.test");
+            Entry entry = new Entry(r, "org.test");
 
-        assertTrue(entry.matches("org/test/MyClass.class"));
-        assertTrue(entry.matches("org/test/MyClass$NestedClass.class"));
-        assertTrue(entry.matches("org/test/MyClasses.properties"));
-        assertTrue(entry.matches("org/test/impl/MyClass.class"));
-        assertFalse(entry.matches("org/tests/AnotherClass.class"));
+            assertTrue(entry.matches("org/test/MyClass.class"));
+            assertTrue(entry.matches("org/test/MyClass$NestedClass.class"));
+            assertTrue(entry.matches("org/test/MyClasses.properties"));
+            assertTrue(entry.matches("org/test/impl/MyClass.class"));
+            assertFalse(entry.matches("org/tests/AnotherClass.class"));
+        }
     }
 
     @Test
-    void testMatchesResourceByClassImport() throws Exception {
-        ClassWorld cw = new ClassWorld();
-        ClassRealm r = cw.newRealm("test1");
+    void matchesResourceByClassImport() throws Exception {
+        try (ClassWorld cw = new ClassWorld()) {
+            ClassRealm r = cw.newRealm("test1");
 
-        Entry entry = new Entry(r, "org.test.MyClass");
+            Entry entry = new Entry(r, "org.test.MyClass");
 
-        assertTrue(entry.matches("org/test/MyClass.class"));
-        assertTrue(entry.matches("org/test/MyClass$NestedClass.class"));
-        assertFalse(entry.matches("org/test/MyClass.properties"));
-        assertFalse(entry.matches("org/test/AnotherClass"));
+            assertTrue(entry.matches("org/test/MyClass.class"));
+            assertTrue(entry.matches("org/test/MyClass$NestedClass.class"));
+            assertFalse(entry.matches("org/test/MyClass.properties"));
+            assertFalse(entry.matches("org/test/AnotherClass"));
+        }
     }
 
     @Test
-    void testMatchesAllImport() throws Exception {
-        ClassWorld cw = new ClassWorld();
-        ClassRealm r = cw.newRealm("test1");
+    void matchesAllImport() throws Exception {
+        try (ClassWorld cw = new ClassWorld()) {
+            ClassRealm r = cw.newRealm("test1");
 
-        Entry entry = new Entry(r, "");
+            Entry entry = new Entry(r, "");
 
-        assertTrue(entry.matches("org.test.MyClass"));
-        assertTrue(entry.matches("org.test.MyClass$NestedClass"));
-        assertTrue(entry.matches("org/test/MyClass.class"));
-        assertTrue(entry.matches("org/test/MyClass.properties"));
+            assertTrue(entry.matches("org.test.MyClass"));
+            assertTrue(entry.matches("org.test.MyClass$NestedClass"));
+            assertTrue(entry.matches("org/test/MyClass.class"));
+            assertTrue(entry.matches("org/test/MyClass.properties"));
+        }
     }
 
     @Test
-    void testMatchesResourceByResourceImport() throws Exception {
-        ClassWorld cw = new ClassWorld();
-        ClassRealm r = cw.newRealm("test1");
+    void matchesResourceByResourceImport() throws Exception {
+        try (ClassWorld cw = new ClassWorld()) {
+            ClassRealm r = cw.newRealm("test1");
 
-        Entry entry1 = new Entry(r, "some.properties");
+            Entry entry1 = new Entry(r, "some.properties");
 
-        assertTrue(entry1.matches("some.properties"));
-        assertFalse(entry1.matches("other.properties"));
+            assertTrue(entry1.matches("some.properties"));
+            assertFalse(entry1.matches("other.properties"));
 
-        Entry entry2 = new Entry(r, "org/test/some.properties");
+            Entry entry2 = new Entry(r, "org/test/some.properties");
 
-        assertTrue(entry2.matches("org/test/some.properties"));
-        assertFalse(entry2.matches("org/test/other.properties"));
+            assertTrue(entry2.matches("org/test/some.properties"));
+            assertFalse(entry2.matches("org/test/other.properties"));
+        }
     }
 
     @Test
-    void testMatchesClassByExactPackageImport() throws Exception {
-        ClassWorld cw = new ClassWorld();
-        ClassRealm r = cw.newRealm("test1");
+    void matchesClassByExactPackageImport() throws Exception {
+        try (ClassWorld cw = new ClassWorld()) {
+            ClassRealm r = cw.newRealm("test1");
 
-        Entry entry = new Entry(r, "org.test.*");
+            Entry entry = new Entry(r, "org.test.*");
 
-        assertTrue(entry.matches("org.test.MyClass"));
-        assertTrue(entry.matches("org.test.MyClass$NestedClass"));
-        assertTrue(entry.matches("org.test.MyClassUtils"));
-        assertFalse(entry.matches("org.test.impl.MyClass"));
-        assertFalse(entry.matches("org.tests.AnotherClass"));
+            assertTrue(entry.matches("org.test.MyClass"));
+            assertTrue(entry.matches("org.test.MyClass$NestedClass"));
+            assertTrue(entry.matches("org.test.MyClassUtils"));
+            assertFalse(entry.matches("org.test.impl.MyClass"));
+            assertFalse(entry.matches("org.tests.AnotherClass"));
+        }
     }
 
     @Test
-    void testMatchesResourceByExactPackageImport() throws Exception {
-        ClassWorld cw = new ClassWorld();
-        ClassRealm r = cw.newRealm("test1");
+    void matchesResourceByExactPackageImport() throws Exception {
+        try (ClassWorld cw = new ClassWorld()) {
+            ClassRealm r = cw.newRealm("test1");
 
-        Entry entry = new Entry(r, "org.test.*");
+            Entry entry = new Entry(r, "org.test.*");
 
-        assertTrue(entry.matches("org/test/MyClass.class"));
-        assertTrue(entry.matches("org/test/MyClass$NestedClass.class"));
-        assertTrue(entry.matches("org/test/MyClasses.properties"));
-        assertFalse(entry.matches("org/test/impl/MyClass.class"));
-        assertFalse(entry.matches("org/tests/AnotherClass.class"));
+            assertTrue(entry.matches("org/test/MyClass.class"));
+            assertTrue(entry.matches("org/test/MyClass$NestedClass.class"));
+            assertTrue(entry.matches("org/test/MyClasses.properties"));
+            assertFalse(entry.matches("org/test/impl/MyClass.class"));
+            assertFalse(entry.matches("org/tests/AnotherClass.class"));
+        }
     }
 }

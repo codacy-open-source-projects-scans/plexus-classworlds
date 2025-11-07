@@ -40,19 +40,20 @@ class StrategyTest extends AbstractClassWorldsTestCase {
     private Strategy strategy;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
+        //noinspection resource
         this.realm = new ClassWorld().newRealm("realm");
         this.strategy = this.realm.getStrategy();
         realm.addURL(getJarUrl("component0-1.0.jar"));
     }
 
     @Test
-    void testLoadingOfApplicationClass() throws Exception {
+    void loadingOfApplicationClass() throws Exception {
         assertNotNull(strategy.loadClass("org.codehaus.plexus.Component0"));
     }
 
     @Test
-    void testLoadingOfApplicationClassThenDoingItAgain() throws Exception {
+    void loadingOfApplicationClassThenDoingItAgain() throws Exception {
         Class<?> c = strategy.loadClass("org.codehaus.plexus.Component0");
 
         assertNotNull(c);
@@ -63,12 +64,12 @@ class StrategyTest extends AbstractClassWorldsTestCase {
     }
 
     @Test
-    void testLoadingOfSystemClass() throws Exception {
+    void loadingOfSystemClass() throws Exception {
         assertNotNull(strategy.getRealm().loadClass("java.lang.Object"));
     }
 
     @Test
-    void testLoadingOfNonExistentClass() {
+    void loadingOfNonExistentClass() {
         try {
             strategy.loadClass("org.codehaus.plexus.NonExistentComponent");
 
@@ -79,7 +80,7 @@ class StrategyTest extends AbstractClassWorldsTestCase {
     }
 
     @Test
-    void testGetApplicationResource() throws Exception {
+    void getApplicationResource() throws Exception {
         URL resource = strategy.getResource("META-INF/plexus/components.xml");
 
         assertNotNull(resource);
@@ -90,7 +91,7 @@ class StrategyTest extends AbstractClassWorldsTestCase {
     }
 
     @Test
-    void testGetSystemResource() {
+    void getSystemResource() {
         assumeTrue(
                 getJavaVersion() < 9.0,
                 "Due to strong encapsulation you cannot get the java/lang/Object.class as resource since Java 9");
@@ -101,7 +102,7 @@ class StrategyTest extends AbstractClassWorldsTestCase {
     }
 
     @Test
-    void testFindResources() throws Exception {
+    void findResources() throws Exception {
         realm.addURL(getJarUrl("component1-1.0.jar"));
 
         Enumeration<URL> e = strategy.getResources("META-INF/plexus/components.xml");
