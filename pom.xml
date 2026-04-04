@@ -107,7 +107,7 @@
         <configuration>
           <instructions>
             <_nouses>true</_nouses>
-            <Export-Package>org.codehaus.classworlds.*;org.codehaus.plexus.classworlds.*</Export-Package>
+            <Export-Package>org.codehaus.plexus.classworlds.*</Export-Package>
           </instructions>
         </configuration>
       </plugin>
@@ -127,7 +127,7 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
           <redirectTestOutputToFile>true</redirectTestOutputToFile>
-          <argLine>-ea:org.codehaus.classworlds:org.codehaus.plexus.classworlds</argLine>
+          <argLine>-ea:org.codehaus.plexus.classworlds @{argLine}</argLine>
           <forkCount>1</forkCount>
         </configuration>
       </plugin>
@@ -155,11 +155,30 @@
                 <artifactItem>
                   <groupId>jakarta.xml.bind</groupId>
                   <artifactId>jakarta.xml.bind-api</artifactId>
-                  <version>4.0.4</version>
+                  <version>4.0.5</version>
                 </artifactItem>
               </artifactItems>
               <outputDirectory>${project.build.directory}/test-lib</outputDirectory>
             </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.12</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>report</id>
+            <goals>
+              <goal>report</goal>
+            </goals>
+            <phase>test</phase>
           </execution>
         </executions>
       </plugin>
